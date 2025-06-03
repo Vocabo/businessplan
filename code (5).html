@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabo.ai - Strategic Blueprint</title> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+
+    <style>
+        :root {
+            --primary-color: #A04BFF; /* Vivid Purple */
+            --primary-color-rgb: 160, 75, 255;
+            --secondary-color: #05F0E5; /* Electric Teal */
+            --secondary-color-rgb: 5, 240, 229;
+            --accent-color: #FFD60A; /* Rich Gold */
+            --accent-color-rgb: 255, 214, 10;
+            
+            --bg-dark-primary: #080910; /* Near Black */
+            --bg-dark-secondary: #10111C; /* Dark Navy */
+            --bg-glass: rgba(16, 17, 28, 0.7); 
+            --glass-border-color: rgba(160, 75, 255, 0.15); 
+            
+            --text-light: #EAEFF5;
+            --text-medium: #ADB5BD; /* Softer Gray */
+            --text-dark: #080910;
+            --text-link-hover: var(--accent-color);
+
+            --card-bg: linear-gradient(155deg, rgba(22, 23, 35, 0.5), rgba(18, 19, 28, 0.3));
+            --card-border: 1px solid rgba(var(--primary-color-rgb), 0.1);
+            --card-shadow: 0 12px 40px rgba(0,0,0,0.35), 0 0 15px rgba(var(--primary-color-rgb),0.05) inset;
+            --card-radius: 22px;
+            --card-backdrop-filter: blur(8px); /* Subtle blur for cards */
+
+            --button-glow: 0 0 18px rgba(var(--primary-color-rgb), 0.6), 0 0 35px rgba(var(--primary-color-rgb), 0.4);
+            --button-hover-glow: 0 0 30px rgba(var(--secondary-color-rgb), 0.7), 0 0 55px rgba(var(--secondary-color-rgb), 0.5);
+
+            --font-family: 'Poppins', sans-serif;
+            --transition-smooth: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); /* Smoother ease */
+            --transition-fast: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+
+        body {
+            font-family: var(--font-family); line-height: 1.85; color: var(--text-light);
+            background-color: var(--bg-dark-primary);
+            background-image: 
+                radial-gradient(ellipse at 15% 85%, rgba(var(--primary-color-rgb), 0.06) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 15%, rgba(var(--secondary-color-rgb), 0.05) 0%, transparent 50%),
+                linear-gradient(180deg, var(--bg-dark-primary) 0%, var(--bg-dark-secondary) 50%, var(--bg-dark-primary) 100%);
+            overflow-x: hidden; position: relative; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .container { width: 90%; max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+
+        /* --- Base & Typography --- */
+        h1, h2, h3, h4 { font-weight: 700; line-height: 1.3; letter-spacing: -1px; color: var(--text-light); }
+        h1 { font-size: clamp(3rem, 7vw, 5rem); margin-bottom: 2.5rem; font-weight: 800; }
+        h2 { font-size: clamp(2.4rem, 5.5vw, 3.8rem); margin-bottom: 4rem; text-align: center; font-weight: 700; }
+        h3 { font-size: clamp(1.8rem, 4.5vw, 2.8rem); margin-bottom: 2rem; color: var(--secondary-color); font-weight: 600; }
+        h4 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); margin-bottom: 1.8rem; color: var(--accent-color); margin-top: 3.5rem; font-weight: 600; }
+        p { margin-bottom: 2.2rem; color: var(--text-medium); font-size: 1.12rem; }
+        strong { color: var(--accent-color); font-weight: 600; }
+        a { color: var(--secondary-color); text-decoration: none; transition: var(--transition-fast); }
+        a:hover { color: var(--text-link-hover); filter: brightness(1.25); }
+
+        /* --- Structure & Layout --- */
+        .section {
+            padding: 8rem 0; position: relative; overflow: hidden;
+            border-bottom: 1px solid rgba(var(--primary-color-rgb), 0.05); /* Subtle separator */
+        }
+        .section.is-active { /* Style for active section */
+             /* Example: Add a subtle left border glow */
+             /* border-left: 4px solid var(--primary-color); */
+             /* background: linear-gradient(90deg, rgba(var(--primary-color-rgb), 0.03), transparent 20%); */
+             transition: background 0.5s ease-in-out; /* Animate background change */
+        }
+
+        .section-intro p { max-width: 850px; margin-left: auto; margin-right: auto; text-align: center; font-size: 1.15rem; color: var(--text-light); opacity: 0.9; margin-bottom: 3rem;}
+        .two-column-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 3rem; align-items: start; }
+        .content-column { /* For text blocks in columns */ }
+
+        .text-gradient { background: linear-gradient(98deg, var(--primary-color) 5%, var(--secondary-color) 70%, var(--accent-color) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-fill-color: transparent; }
+        .text-gradient-alt { background: linear-gradient(95deg, var(--secondary-color), var(--accent-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-fill-color: transparent; }
+        
+        /* --- Buttons --- */
+        .btn {
+            display: inline-block; padding: 1.1rem 2.8rem; border-radius: 35px; font-weight: 600; font-size: 1.1rem; text-align: center;
+            cursor: pointer; transition: var(--transition-smooth); border: none; position: relative; overflow: hidden; z-index: 1;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+        }
+        .btn i { margin-right: 0.6rem; }
+        .btn-primary { background: linear-gradient(98deg, var(--primary-color), var(--secondary-color)); color: var(--text-dark); box-shadow: var(--button-glow); }
+        .btn-primary:hover { transform: translateY(-6px) scale(1.05); box-shadow: var(--button-hover-glow); filter: brightness(1.2); }
+        .btn-secondary { background: transparent; color: var(--text-light); border: 2.5px solid var(--secondary-color); }
+        .btn-secondary:hover { background: var(--secondary-color); color: var(--text-dark); border-color: var(--secondary-color); transform: translateY(-6px) scale(1.05); }
+        
+        /* --- Background Effects & Particles --- */
+        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -2; pointer-events: none; opacity: 0.7; }
+        #floating-words-container { /* No changes needed, keep as is */ }
+        .floating-word { /* No changes needed, keep as is */ }
+
+        /* --- Header --- */
+        .main-header {
+            position: fixed; top: 0; left: 0; width: 100%; padding: 0.7rem 0; background: var(--bg-glass);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border-color);
+            z-index: 1000; transition: padding 0.3s ease, background-color 0.3s ease;
+        }
+        .main-header.scrolled { padding: 0.4rem 0; background: rgba(8, 9, 16, 0.8); }
+        .main-nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; }
+        .logo-container { display: flex; align-items: center; white-space: nowrap; transition: transform 0.3s ease; }
+        .logo-container:hover { transform: scale(1.03); }
+        .logo-icon { font-size: 2.6rem; color: var(--primary-color); margin-right: 0.8rem; animation: pulseLogo 4.5s infinite cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+        @keyframes pulseLogo { 0%, 100% { transform: scale(1) rotate(-8deg); color: var(--primary-color); } 50% { transform: scale(1.25) rotate(12deg); color: var(--secondary-color); } }
+        .logo-text { font-size: 1.9rem; font-weight: 800; color: var(--text-light); }
+        .logo-text span { color: var(--secondary-color); font-weight: 700; }
+
+        .nav-links { list-style: none; display: flex; align-items: center; }
+        .nav-links li { margin-left: 2.2rem; } 
+        .nav-links a {
+            color: var(--text-medium); font-weight: 500; font-size: 1rem; position: relative; padding: 0.8rem 0.2rem; /* Added padding for bigger hit area */
+            white-space: nowrap; letter-spacing: 0.6px; transition: color 0.3s ease;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); width: 0; height: 3.5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); transition: width 0.4s ease; border-radius: 4px;
+        }
+        .nav-links a:hover { color: var(--text-light); }
+        .nav-links a.active { color: var(--text-light); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        
+        .mobile-menu-toggle {
+            display: none; background: none; border: none; color: var(--text-light); font-size: 2.4rem;
+            cursor: pointer; z-index: 1001; margin-left: 1.5rem; transition: transform 0.3s ease;
+        }
+        .mobile-menu-toggle:hover { transform: scale(1.1); color: var(--secondary-color); }
+
+
+        /* --- Section Specific Styles & Cards --- */
+        .content-section h2.section-title {
+            text-align: left; margin-bottom: 3rem; font-size: clamp(2.4rem, 5vw, 3.5rem);
+            border-bottom: 5px solid; border-image-slice: 1;
+            border-image-source: linear-gradient(to right, var(--primary-color), var(--secondary-color) 70%, transparent 100%);
+            padding-bottom: 1.2rem; display: inline-block; position: relative;
+        }
+         .content-section h3.subsection-title {
+            color: var(--secondary-color); font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-top: 4rem; margin-bottom: 2rem; position: relative; padding-left: 1.8rem;
+        }
+        .content-section h3.subsection-title::before {
+            content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+            width: 8px; height: 90%; background: linear-gradient(var(--secondary-color), var(--accent-color));
+            border-radius: 4px; box-shadow: 0 0 10px rgba(var(--secondary-color-rgb), 0.4);
+        }
+        .content-section h4.detail-title {
+            color: var(--accent-color); font-size: clamp(1.4rem, 3vw, 2rem);
+            margin-top: 3.5rem; margin-bottom: 1.5rem; font-weight: 600; display: flex; align-items: center;
+        }
+        .content-section h4.detail-title i { margin-right: 1rem; font-size: 1.15em; opacity: 0.9; }
+        
+        mark.search-highlight {
+            background-color: rgba(var(--accent-color-rgb), 0.8); color: var(--bg-dark-primary);
+            padding: 0.25em 0.45em; border-radius: 6px; font-weight: 700;
+            box-shadow: 0 0 12px rgba(var(--accent-color-rgb),0.7); display: inline; /* Ensure it doesn't break flow */
+        }
+
+        /* Card System */
+        .card-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem; list-style: none; padding-left: 0; margin-top: 2.5rem;
+            perspective: 1000px; /* For 3D hover */
+        }
+        .card-item {
+            background: var(--card-bg); border: var(--card-border); border-radius: var(--card-radius);
+            padding: 2.2rem; box-shadow: var(--card-shadow); backdrop-filter: var(--card-backdrop-filter);
+            transition: transform 0.4s var(--transition-smooth), box-shadow 0.4s var(--transition-smooth), border-color 0.4s ease;
+            display: flex; flex-direction: column; border-left: 5px solid transparent; 
+            transform-style: preserve-3d; /* For 3D hover */
+        }
+        .card-item:hover {
+            transform: translateY(-10px) rotateY(2deg) rotateX(3deg) scale(1.03); /* Subtle 3D tilt */
+            box-shadow: 0 20px 55px rgba(0,0,0,0.4), 0 0 25px rgba(var(--primary-color-rgb),0.1) inset;
+            border-left-color: var(--primary-color);
+        }
+        .card-item-header { display: flex; align-items: center; margin-bottom: 1.2rem; }
+        .card-item-header i { font-size: 2rem; color: var(--primary-color); margin-right: 1.2rem; transition: color 0.3s ease, transform 0.3s ease; }
+        .card-item:hover .card-item-header i { color: var(--secondary-color); transform: scale(1.1); }
+        .card-item-header strong { color: var(--text-light); font-size: 1.35rem; font-weight: 600; }
+        .card-item p, .card-item ul { font-size: 1.05rem; color: var(--text-medium); margin-bottom: 0; line-height: 1.75; }
+        .card-item ul { list-style: none; padding-left: 0; margin-top: 0.5rem;}
+        .card-item ul li { padding-left: 1.8rem; position: relative; margin-bottom: 0.6rem; }
+        .card-item ul li::before {
+            content: '\f058'; /* Check circle solid */ font-family: 'Font Awesome 6 Free'; font-weight: 900;
+            position: absolute; left: 0; top: 0.2em; color: var(--secondary-color); font-size: 1rem;
+        }
+
+        /* Data Point Cards (for finance) */
+        .data-point-card {
+            text-align: center; background: linear-gradient(140deg, rgba(var(--primary-color-rgb), 0.08), rgba(var(--secondary-color-rgb), 0.05));
+        }
+        .data-point-card .card-item-header { justify-content: center; }
+        .data-point-card .data-value {
+            font-size: 2.5rem; font-weight: 700; display: block; margin-top: 0.5rem;
+            color: var(--accent-color);
+        }
+        
+        /* --- Hero Section --- */
+        #hero {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;
+            padding-top: 60px; 
+            background: linear-gradient(175deg, var(--bg-dark-primary) 5%, var(--bg-dark-secondary) 45%, var(--bg-dark-secondary) 55%, var(--bg-dark-primary) 95%);
+            position: relative; z-index: 1;
+        }
+         #hero::before { 
+            content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: 0; opacity: 0.3; mix-blend-mode: overlay;
+        }
+        .hero-content { max-width: 1000px; position: relative; z-index: 1; }
+        .hero-content h1 { text-shadow: 0 0 40px rgba(var(--primary-color-rgb), 0.6), 0 0 60px rgba(var(--secondary-color-rgb), 0.4); }
+        .hero-content .subtitle { font-size: 1.35rem; color: var(--text-medium); margin-bottom: 3.5rem; max-width: 850px; margin-left: auto; margin-right: auto; line-height: 1.95; font-weight: 400; }
+        .hero-cta-buttons .btn { margin: 0 1.2rem; }
+
+        /* --- Footer --- */
+        .main-footer {
+            background: var(--bg-dark-secondary); padding: 5rem 0 3rem;
+            border-top: 4px solid; border-image-slice: 1;
+            border-image-source: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            text-align: center; position: relative;
+        }
+         .main-footer::before { /* Footer gradient overlay */
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 200px;
+            background: linear-gradient(180deg, rgba(var(--bg-dark-secondary-rgb), 0.5), transparent);
+            z-index: 0; pointer-events: none;
+        }
+        .footer-content { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; position: relative; z-index: 1;} /* Adjusted gap */
+        .footer-logo-container { margin-bottom: 1rem; }
+        .footer-logo-container .logo-icon { font-size: 3rem; }
+        .footer-logo-container .logo-text { font-size: 2.2rem; }
+        
+        .footer-contact-area { margin: 1rem 0; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; justify-content: center;}
+        .footer-contact-email { font-size: 1.15rem; color: var(--text-light); }
+        .footer-contact-email a { color: var(--secondary-color); font-weight: 500; }
+        .footer-contact-email a:hover { color: var(--accent-color); }
+        .copy-email-btn {
+            background: rgba(var(--secondary-color-rgb), 0.1); border: 1px solid rgba(var(--secondary-color-rgb), 0.3);
+            color: var(--secondary-color); padding: 0.3rem 0.8rem; font-size: 0.8rem; border-radius: 8px; cursor: pointer;
+            transition: background 0.3s ease, color 0.3s ease; margin-left: 0.5rem;
+        }
+        .copy-email-btn:hover { background: var(--secondary-color); color: var(--text-dark); }
+        .copy-email-btn.copied { background: var(--accent-color); color: var(--text-dark); border-color: var(--accent-color); }
+
+        .footer-search-container { width: 100%; max-width: 450px; margin: 1.5rem auto; }
+        #footer-search-input {
+            width: 100%; padding: 0.9rem 1.8rem; border-radius: 35px;
+            border: 1.5px solid var(--glass-border-color);
+            background-color: rgba(var(--bg-dark-primary-rgb), 0.4);
+            color: var(--text-light); font-size: 1.05rem;
+            transition: var(--transition-fast); box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+        }
+        #footer-search-input::placeholder { color: var(--text-medium); opacity: 0.6; }
+        #footer-search-input:focus {
+            outline: none; border-color: var(--secondary-color);
+            box-shadow: 0 0 18px rgba(var(--secondary-color-rgb), 0.45), inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .footer-nav { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem 2rem; margin-top: 1rem; }
+        .footer-nav a { color: var(--text-medium); font-size: 1rem; }
+        .footer-nav a:hover { color: var(--text-light); }
+        .social-links { display: flex; gap: 2rem; margin-top: 1.5rem; }
+        .social-links a { color: var(--text-medium); font-size: 1.8rem; transition: var(--transition-fast); }
+        .social-links a:hover { color: var(--secondary-color); transform: scale(1.3) translateY(-4px); }
+        .copyright { font-size: 0.95rem; color: var(--text-medium); opacity:0.75; margin-top: 2rem; }
+        .copyright i { transition: color 0.3s ease; }
+        .copyright:hover i { color: var(--secondary-color); }
+
+        /* Scroll to Top Button */
+        #scrollToTopBtn {
+            position: fixed; bottom: 35px; right: 35px; display: none;
+            background: linear-gradient(140deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-light); border: none; border-radius: 50%;
+            width: 60px; height: 60px; font-size: 1.8rem; text-align: center; line-height: 60px; /* Center icon */
+            cursor: pointer; z-index: 999;
+            box-shadow: 0 8px 25px rgba(var(--primary-color-rgb), 0.6);
+            transition: all 0.3s ease;
+        }
+        #scrollToTopBtn:hover { transform: scale(1.18) rotate(15deg); filter: brightness(1.3); box-shadow: 0 10px 30px rgba(var(--secondary-color-rgb), 0.7); }
+
+
+        /* --- Responsive Design --- */
+        @media (max-width: 1024px) { 
+            .nav-links { display: none; }
+            .mobile-menu-toggle { display: block; }
+            .main-header.open .main-nav { flex-wrap: wrap; }
+            /* Mobile menu styles adjusted */
+            .main-header.open .nav-links {
+                display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%;
+                background: var(--bg-dark-secondary); padding: 2.5rem 0; border-top: 1px solid var(--glass-border-color);
+                box-shadow: 0 15px 35px rgba(0,0,0,0.35); order: 2; 
+            }
+            .main-header.open .nav-links li { margin: 1.5rem 0; text-align: center; width: 100%; }
+            .main-header.open .nav-links a { display: block; padding: 1rem 0; font-size: 1.15rem; }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: clamp(2.6rem, 9vw, 3.5rem); }
+            h2 { font-size: clamp(2.1rem, 8vw, 2.9rem); }
+            .section { padding: 6rem 0; }
+            .content-section { padding: 4.5rem 0; }
+            .hero-cta-buttons { gap: 1.8rem; }
+            .hero-cta-buttons .btn { width: 95%; max-width: 380px; padding: 1rem 2rem; font-size: 1rem;}
+            .logo-text { font-size: 1.7rem;} .logo-icon { font-size: 2.2rem;}
+            .two-column-layout { grid-template-columns: 1fr; gap: 2rem;}
+            .card-grid { grid-template-columns: 1fr; gap: 1.8rem;}
+            .card-item { padding: 1.8rem; }
+            .card-item-header strong { font-size: 1.2rem; }
+            .card-item p { font-size: 1rem; }
+            #scrollToTopBtn { width: 55px; height: 55px; font-size: 1.5rem; bottom: 25px; right: 25px;}
+            .footer-search-container { max-width: 95%; }
+            .footer-nav { gap: 1rem 1.5rem; }
+            .social-links { gap: 1.5rem; }
+        }
+        
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar { width: 12px; height: 12px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark-primary); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--primary-color), var(--secondary-color)); border-radius: 10px; border: 3px solid var(--bg-dark-primary); }
+        ::-webkit-scrollbar-thumb:hover { filter: brightness(1.4); box-shadow: 0 0 10px rgba(var(--secondary-color-rgb), 0.5); }
+    </style>
+</head>
+<body>
+
+    <div id="particles-js"></div>
+    <!-- Floating words container is removed for cleaner look based on "less blocky" feel, can be added back if desired -->
+    <!-- <div id="floating-words-container"></div> --> 
+
+    <header class="main-header" id="mainHeader">
+        <div class="container main-nav">
+            <a href="#hero" class="logo-container">
+                <i class="fas fa-cubes-stacked logo-icon"></i> <!-- New Icon -->
+                <div class="logo-text">vocabo<span>.ai BP</span></div>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#hero" class="nav-link active">Start</a></li>
+                    <li><a href="#executive-summary" class="nav-link">Summary</a></li>
+                    <li><a href="#company-description" class="nav-link">Vision</a></li>
+                    <li><a href="#market-analysis" class="nav-link">Market</a></li>
+                    <li><a href="#products-services" class="nav-link">Product</a></li>
+                    <li><a href="#marketing-sales" class="nav-link">Strategy</a></li>
+                    <li><a href="#management-finance" class="nav-link">Team & Finance</a></li>
+                    <li><a href="#contact-footer" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle Menu">
+                <i class="fas fa-stream"></i> <!-- Different modern burger icon -->
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="section">
+            <div class="container hero-content">
+                <h1 class="text-gradient animate-on-scroll" data-animation-type="fadeInUp">Vocabo.ai: Language Learning Reimagined</h1>
+                <p class="subtitle animate-on-scroll" data-animation-type="fadeInUp" data-delay="0.2">Explore the strategic blueprint detailing our AI-driven vision, market disruption, innovative product ecosystem, and financial roadmap for global impact.</p>
+                <div class="hero-cta-buttons animate-on-scroll" data-animation-type="fadeInUp" data-delay="0.4">
+                    <a href="#executive-summary" class="btn btn-primary"><i class="fas fa-file-alt"></i>View Summary</a>
+                    <a href="#products-services" class="btn btn-secondary"><i class="fas fa-lightbulb"></i>See Product</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="executive-summary" class="section content-section" data-section-id="executive-summary">
+            <div class="container">
+                <h2 class="section-title text-gradient animate-on-scroll">Executive Summary</h2>
+                 <div class="section-intro animate-on-scroll">
+                     <p>Vocabo.ai pioneers a new era in language acquisition, offering a hyper-personalized, AI-powered platform designed for ambitious students and professionals globally.</p>
+                 </div>
+                <div class="two-column-layout searchable-content">
+                    <div class="content-column animate-on-scroll" data-delay="0.1">
+                        <p>Leveraging the advanced capabilities of the Gemini API, Vocabo.ai provides an engaging educational journey starting with adaptive proficiency tests in English or French (initial focus), tailored to users' native German or English. Our ecosystem features AI-generated courses, interactive tasks, dynamic exercises, intuitive dashboards, and integrated chat for support and practice ("VocaboHelper" & "Voco").</p>
+                    </div>
+                     <div class="content-column animate-on-scroll" data-delay="0.2">
+                        <p>Operating on a freemium model, base access is free, while Silver and Gold tiers unlock advanced AI content creation, deeper personalization, and premium features. Our USP lies in unparalleled AI customization, 24/7 AI support, robust gamification, and real-time conversational feedback. Future plans include audio-based learning modes and language expansion.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="company-description" class="section content-section" data-section-id="company-description">
+            <div class="container">
+                <h2 class="section-title text-gradient animate-on-scroll">Vision & Mission</h2>
+                 <div class="section-intro animate-on-scroll">
+                    <p>To revolutionize language education by making fluency accessible, effective, and deeply personalized through cutting-edge AI technology.</p>
+                 </div>
+                 <div class="searchable-content">
+                    <div class="two-column-layout">
+                         <div class="content-column animate-on-scroll" data-delay="0.1">
+                             <h3 class="subsection-title text-gradient-alt">Our Foundation</h3>
+                            <p>Vocabo.ai enters the dynamic online education market with a clear mission: empower students and professionals to achieve language mastery. Founded on principles of accessibility, efficacy, and individual tailoring, we utilize advanced AI (primarily Gemini API) to deliver a superior learning experience.</p>
+                         </div>
+                          <div class="content-column animate-on-scroll" data-delay="0.2">
+                              <h3 class="subsection-title text-gradient-alt">Core Approach</h3>
+                            <p>Initially focusing on English/French for German/English speakers ensures a strong base. We differentiate through customized paths, AI-generated content, interactive exercises, and innovative support systems like our dual AI chat. Our web/mobile platform offers anytime, anywhere learning.</p>
+                        </div>
+                    </div>
+                     <div class="animate-on-scroll" data-delay="0.3" style="margin-top: 3rem; text-align: center;">
+                         <h3 class="subsection-title text-gradient-alt" style="text-align: center; display: inline-block; border: none; padding-left: 0;">Long-Term Ambition</h3>
+                        <p style="max-width: 800px; margin: 0 auto;">Become a global leader in AI-driven language education, continuously expanding language offerings and integrating the latest tech advancements. Driven by a Munich-based founder's vision to harness technology for real-world learning solutions.</p>
+                    </div>
+                 </div>
+            </div>
+        </section>
+
+        <section id="market-analysis" class="section content-section" data-section-id="market-analysis">
+            <div class="container">
+                <h2 class="section-title text-gradient animate-on-scroll">Market Landscape</h2>
+                <div class="section-intro animate-on-scroll">
+                     <p>The online language learning market is booming, fueled by globalization and the demand for personalized, AI-powered experiences.</p>
+                 </div>
+                 <div class="searchable-content">
+                     <div class="two-column-layout">
+                         <div class="content-column animate-on-scroll" data-delay="0.1">
+                             <h3 class="subsection-title text-gradient-alt">Market Dynamics</h3>
+                             <p>Rapid expansion driven by internet penetration and the value of multilingualism. Research (MakesYouFluent.com, CNET) confirms high demand for interactive, AI-driven platforms like Vocabo.ai. Our target audience (students & professionals) is significant and highly motivated.</p>
+                         </div>
+                          <div class="content-column animate-on-scroll" data-delay="0.2">
+                              <h3 class="subsection-title text-gradient-alt">Target Audience Needs</h3>
+                             <p>Students require proficiency for academics/tests. Professionals seek skills for career advancement and international business. Our initial English/French focus caters to large, active European and global learning communities.</p>
+                         </div>
+                     </div>
+
+                    <h3 class="subsection-title animate-on-scroll" data-delay="0.3">Competitive Arena & Monetization</h3>
+                    <div class="card-grid searchable-content">
+                        <div class="card-item competitor-card animate-on-scroll" data-delay="0.35">
+                            <div class="card-item-header"><i class="fas fa-crown"></i><strong>Key Competitors</strong></div>
+                            <p>Duolingo (Freemium/Gamified, ~$13-30/mo), Babbel (Structured, ~$18/mo + Live Classes), Rosetta Stone (Subscription/Lifetime), TalkPal (AI-focused, Freemium from ~$5/mo).</p>
+                        </div>
+                        <div class="card-item competitor-card animate-on-scroll" data-delay="0.4">
+                             <div class="card-item-header"><i class="fas fa-dollar-sign"></i><strong>Monetization Strategy</strong></div>
+                            <p>Vocabo.ai adopts the proven Freemium model. This lowers entry barriers, builds a large user base, and creates a funnel for converting users to paid Silver/Gold tiers.</p>
+                        </div>
+                         <div class="card-item competitor-card animate-on-scroll" data-delay="0.45">
+                             <div class="card-item-header"><i class="fas fa-lightbulb-on"></i><strong>Our Differentiation</strong></div>
+                            <p>Success lies in unique value. Vocabo.ai excels with hyper-personalized AI content, unique dual AI chat support (VocaboHelper & Voco), robust gamification, and a focus on superior UX providing tangible results.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="products-services" class="section content-section" data-section-id="products-services">
+            <div class="container">
+                <h2 class="section-title text-gradient animate-on-scroll">Product Ecosystem</h2>
+                <div class="section-intro animate-on-scroll">
+                     <p>Vocabo.ai offers a dynamic, AI-powered web and mobile application suite designed for personalized, engaging, and effective language mastery.</p>
+                 </div>
+                 <div class="searchable-content">
+                    <h3 class="subsection-title animate-on-scroll" data-delay="0.2">Core Platform Features</h3>
+                    <ul class="card-grid animate-on-scroll" data-delay="0.25">
+                        <li class="card-item"><div class="card-item-header"><i class="fas fa-robot"></i><strong>AI Courses</strong></div><p>Dynamically generated & adaptive curriculum based on user assessment.</p></li>
+                        <li class="card-item"><div class="card-item-header"><i class="fas fa-tasks-alt"></i><strong>Interactive Exercises</strong></div><p>Adaptive drills (vocab, grammar, reading, listening) that adjust difficulty.</p></li>
+                        <li class="card-item"><div class="card-item-header"><i class="fas fa-comments-alt"></i><strong>"Voco" AI Tutor</strong></div><p>Real-time conversational practice (speaking/writing) with instant feedback.</p></li>
+                        <li class="card-item"><div class="card-item-header"><i class="fas fa-joystick"></i><strong>Gamification</strong></div><p>Points, badges, streaks, leaderboards to enhance motivation & engagement.</p></li>
+                        <li class="card-item"><div class="card-item-header"><i class="fas fa-chart-network"></i><strong>Progress Analytics</strong></div><p>Detailed insights into user performance, strengths, and weaknesses.</p></li>
+                         <li class="card-item"><div class="card-item-header"><i class="fas fa-user-headset"></i><strong>"VocaboHelper" Support</strong></div><p>AI-powered chat for platform assistance and troubleshooting.</p></li>
+                    </ul>
+
+                    <div class="two-column-layout" style="margin-top: 4rem;">
+                         <div class="content-column animate-on-scroll" data-delay="0.3">
+                            <h3 class="subsection-title">Technology Stack</h3>
+                            <ul class="card-grid tech-stack-list"> <!-- Simplified list here -->
+                                <li class="card-item"><div class="card-item-header"><i class="fab fa-react"></i><strong>Frontend</strong></div><p>React/Vue (Web), Swift/Kotlin (Mobile)</p></li>
+                                <li class="card-item"><div class="card-item-header"><i class="fas fa-server"></i><strong>Backend</strong></div><p>Python/Node.js (Scalable)</p></li>
+                                <li class="card-item"><div class="card-item-header"><i class="fas fa-brain-circuit"></i><strong>AI/ML</strong></div><p>Gemini API, TensorFlow/PyTorch</p></li>
+                                <li class="card-item"><div class="card-item-header"><i class="fas fa-database"></i><strong>Database</strong></div><p>PostgreSQL/MongoDB</p></li>
+                            </ul>
+                         </div>
+                          <div class="content-column animate-on-scroll" data-delay="0.4">
+                              <h3 class="subsection-title">Future Roadmap</h3>
+                             <ul class="card-grid dev-list">
+                                <li class="card-item"><div class="card-item-header"><i class="fas fa-globe-europe"></i><strong>Languages+</strong></div><p>Expand language offerings strategically.</p></li>
+                                <li class="card-item"><div class="card-item-header"><i class="fas fa-vr-cardboard"></i><strong>Immersive Tech</strong></div><p>Explore VR/AR integrations.</p></li>
+                                <li class="card-item"><div class="card-item-header"><i class="fas fa-briefcase"></i><strong>Specialized Tracks</strong></div><p>Develop industry-specific courses.</p></li>
+                                <li class="card-item"><div class="card-item-header"><i class="fas fa-headset"></i><strong>Audio Learning</strong></div><p>Integrate advanced audio features.</p></li>
+                             </ul>
+                         </div>
+                    </div>
+                 </div>
+            </div>
+        </section>
+
+        <section id="marketing-sales" class="section content-section" data-section-id="marketing-sales">
+            <div class="container">
+                 <h2 class="section-title text-gradient animate-on-scroll">Go-to-Market Strategy</h2>
+                 <div class="section-intro animate-on-scroll">
+                     <p>A multi-pronged approach focused on building brand awareness, driving targeted user acquisition, and optimizing the freemium conversion funnel.</p>
+                 </div>
+                 <div class="searchable-content">
+                    <h4 class="detail-title animate-on-scroll" data-delay="0.1"><i class="fas fa-users"></i>Target Audience & Messaging</h4>
+                    <p class="animate-on-scroll" data-delay="0.15">Focus on students (academic success, fun) and professionals (career growth, flexibility). Tailored messaging across all channels to address specific motivations.</p>
+
+                    <h3 class="subsection-title animate-on-scroll" data-delay="0.2">Core Marketing Pillars</h3>
+                    <ul class="card-grid animate-on-scroll" data-delay="0.25">
+                        <li class="card-item"><div class="card-item-header"><i class="fas fa-chart-bar"></i><strong>Digital Presence</strong></div><p>Aggressive SEO/SEM, compelling Content Marketing (blogs, videos), engaging Social Media (Insta, TikTok, LinkedIn), targeted PPC Ads.</p></li>
+                        <li class="card-item"><div class="card-item-header"><i class="fas fa-share-alt"></i><strong>Community & Influence</strong></div><p>Influencer marketing partnerships, user-generated content initiatives, building an active online community.</p></li>
+                        <li class="card-item"><div class="card-item-header"><i class="fas fa-filter"></i><strong>Freemium Funnel</strong></div><p>Utilize the free tier to attract users. Employ sophisticated in-app prompts, email nurturing, and targeted offers to drive premium upgrades.</p></li>
+                        <li class="card-item"><div class="card-item-header"><i class="fas fa-link"></i><strong>Strategic Partnerships</strong></div><p>Collaborate with Educational Institutions, develop Corporate B2B programs, optimize App Store presence (ASO).</p></li>
+                    </ul>
+                    
+                     <div class="two-column-layout" style="margin-top: 4rem;">
+                         <div class="content-column animate-on-scroll" data-delay="0.3">
+                             <h4 class="detail-title"><i class="fas fa-flag-checkered"></i>Launch Plan</h4>
+                             <p>Phased rollout starting with Munich/German-speaking regions. Gather feedback, iterate, then expand. Early adopters receive incentives (discounts, founder status).</p>
+                         </div>
+                          <div class="content-column animate-on-scroll" data-delay="0.4">
+                              <h4 class="detail-title"><i class="fas fa-tasks"></i>Success Metrics (KPIs)</h4>
+                             <p>Track Website Traffic, User Acquisition Cost (UAC), Conversion Rates (Free-to-Paid), DAU/MAU, Customer Lifetime Value (CLV), Churn Rate. Continuously analyze and optimize.</p>
+                         </div>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="management-finance" class="section content-section" data-section-id="management-finance">
+            <div class="container">
+                 <h2 class="section-title text-gradient animate-on-scroll">Team & Financials</h2>
+                 <div class="section-intro animate-on-scroll">
+                    <p>Led by a visionary founder, Vocabo.ai plans for strategic team growth alongside a clear financial framework focused on sustainable expansion.</p>
+                 </div>
+                 <div class="searchable-content">
+                    <div class="two-column-layout">
+                        <div class="content-column animate-on-scroll" data-delay="0.1">
+                           <h3 class="subsection-title">Leadership & Team Growth</h3>
+                           <p>Initially founder-led, overseeing all business functions. Strategic plan to hire experienced tech, marketing, and education leads as growth milestones are achieved, building a lean, high-impact team.</p>
+                        </div>
+                        <div class="content-column animate-on-scroll" data-delay="0.2">
+                            <h3 class="subsection-title">Funding Approach</h3>
+                             <p>Initial phase bootstrapped via founder's investment. Actively seeking strategic seed funding from angel investors and/or VCs to accelerate product development, market penetration, and team expansion.</p>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title animate-on-scroll" data-delay="0.3">Financial Framework</h3>
+                    <ul class="card-grid animate-on-scroll" data-delay="0.35">
+                       <li class="card-item data-point-card">
+                            <div class="card-item-header"><i class="fas fa-rocket-launch"></i><strong>Startup Costs</strong></div>
+                            <p>Platform Dev, Marketing Launch, Legal/Admin Setup</p>
+                            <!-- <span class="data-value">Estimate</span> -->
+                       </li>
+                       <li class="card-item data-point-card">
+                            <div class="card-item-header"><i class="fas fa-hand-holding-seedling"></i><strong>Funding Sources</strong></div>
+                            <p>Personal Investment, Seeking Seed/Angel Round</p>
+                            <!-- <span class="data-value">Target</span> -->
+                       </li>
+                       <li class="card-item data-point-card">
+                            <div class="card-item-header"><i class="fas fa-money-check-edit-alt"></i><strong>Revenue Streams</strong></div>
+                            <p>Freemium (Silver/Gold Tiers), B2B Corporate Programs</p>
+                            <!-- <span class="data-value">Model</span> -->
+                        </li>
+                    </ul>
+                     <div class="animate-on-scroll" data-delay="0.4" style="margin-top: 3rem; background: rgba(var(--bg-dark-primary-rgb), 0.3); padding: 2rem; border-radius: var(--card-radius); border: 1px solid var(--glass-border-color);">
+                          <h4 class="detail-title" style="margin-top: 0; text-align: center;"><i class="fas fa-chart-line"></i>Detailed Financial Projections</h4>
+                         <p style="text-align: center; max-width: 700px; margin: 0 auto;"><em>(Comprehensive 3-5 year projections including income statements, cash flow, and balance sheets are under development. These will be based on detailed market analysis, UAC modeling, conversion estimates, operational costs, and revenue stream forecasts. This serves as the foundational structure.)</em></p>
+                     </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact-footer" class="main-footer">
+        <div class="container footer-content">
+            <div class="footer-logo-container animate-on-scroll" data-animation-type="fadeIn">
+                 <a href="#hero" class="logo-container">
+                    <i class="fas fa-cubes-stacked logo-icon"></i>
+                    <div class="logo-text">vocabo<span>.ai</span></div> <!-- Simplified footer logo -->
+                </a>
+            </div>
+
+             <div class="footer-contact-area animate-on-scroll" data-animation-type="fadeIn" data-delay="0.1">
+                 <span class="footer-contact-email">
+                    Get in touch: <a href="mailto:team.vocabo.ai@gmail.com?subject=Inquiry%20Business%20Plan%20Vocabo.ai">team.vocabo.ai@gmail.com</a>
+                 </span>
+                 <button class="copy-email-btn" id="copyEmailBtn" title="Copy email address">
+                    <i class="far fa-copy"></i> Copy
+                 </button>
+             </div>
+
+             <p style="font-size: 1.1rem; color: var(--text-medium); max-width: 700px; margin: 0 auto 2.5rem auto;" class="animate-on-scroll" data-animation-type="fadeIn" data-delay="0.2">
+                Let's build the future of language learning together. Explore collaboration or investment opportunities.
+             </p>
+
+             <div class="footer-search-container animate-on-scroll" data-animation-type="fadeIn" data-delay="0.3">
+                <input type="text" id="footer-search-input" placeholder="Search the Blueprint...">
+             </div>
+
+            <nav class="animate-on-scroll" data-animation-type="fadeIn" data-delay="0.4">
+                <ul class="footer-nav">
+                    <li><a href="#executive-summary">Summary</a></li>
+                    <li><a href="#company-description">Vision</a></li>
+                    <li><a href="#market-analysis">Market</a></li>
+                    <li><a href="#products-services">Product</a></li>
+                    <li><a href="#marketing-sales">Strategy</a></li>
+                    <li><a href="#management-finance">Team & Finance</a></li>
+                </ul>
+            </nav>
+            <div class="social-links animate-on-scroll" data-animation-type="fadeIn" data-delay="0.5">
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" aria-label="Xing"><i class="fab fa-xing"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Medium"><i class="fab fa-medium-m"></i></a>
+                <a href="#" aria-label="Github"><i class="fab fa-github"></i></a>
+            </div>
+            <p class="copyright animate-on-scroll" data-animation-type="fadeIn" data-delay="0.6">&copy; <span id="currentYear"></span> Vocabo.ai - All Rights Reserved. Innovated with <i class="fas fa-heart"></i> in Munich.</p>
+        </div>
+    </footer>
+
+    <button id="scrollToTopBtn" title="Go to top"><i class="fas fa-arrow-up-long"></i></button>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        gsap.registerPlugin(ScrollToPlugin, ScrollTrigger); 
+
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // --- ParticlesJS Initialization (Keep as is) ---
+        if (window.particlesJS) {
+            particlesJS('particles-js', { /* Minified particles config */"particles":{"number":{"value":20,"density":{"enable":true,"value_area":800}},"color":{"value":["#A04BFF","#05F0E5","#FFD60A"]},"shape":{"type":"circle"},"opacity":{"value":0.1,"random":true,"anim":{"enable":true,"speed":0.2,"opacity_min":0.01,"sync":false}},"size":{"value":2.5,"random":true},"line_linked":{"enable":true,"distance":180,"color":"#ffffff","opacity":0.04,"width":1},"move":{"enable":true,"speed":0.7,"direction":"none","random":true,"out_mode":"out","bounce":false}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"bubble"},"resize":true},"modes":{"bubble":{"distance":200,"size":3,"duration":2,"opacity":0.8,"speed":3}}},"retina_detect":true});
+        }
+        
+        // --- Header Scroll Effect ---
+        const header = document.getElementById('mainHeader');
+        ScrollTrigger.create({
+            start: "top -60", end: 99999, // Trigger slightly earlier
+            toggleClass: {className: "scrolled", targets: header}
+        });
+
+        // --- Mobile Menu ---
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        mobileMenuToggle.addEventListener('click', () => {
+            header.classList.toggle('open');
+            const isOpen = header.classList.contains('open');
+            mobileMenuToggle.innerHTML = isOpen ? '<i class="fas fa-times"></i>' : '<i class="fas fa-stream"></i>';
+            mobileMenuToggle.setAttribute('aria-expanded', isOpen);
+        });
+        
+        // --- Smooth Scrolling for Nav Links ---
+        const allNavLinks = document.querySelectorAll('.main-header .nav-links a, .footer-nav a, .hero-cta-buttons a[href^="#"]');
+        allNavLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = href.substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        let headerOffset = header.offsetHeight;
+                        if (targetId === 'hero') headerOffset = 0; 
+                        
+                        gsap.to(window, {
+                            duration: 1.3, // Slightly longer scroll
+                            scrollTo: { y: targetElement, offsetY: headerOffset + 10 }, // Increased offset slightly
+                            ease: "power3.inOut"
+                        });
+                    }
+                    if (header.classList.contains('open')) { 
+                        header.classList.remove('open');
+                        mobileMenuToggle.innerHTML = '<i class="fas fa-stream"></i>';
+                        mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                    }
+                }
+            });
+        });
+
+        // --- Active Nav Link & Section Highlighting ---
+        const navLinksForActiveState = document.querySelectorAll('.nav-links a');
+        const sections = document.querySelectorAll('main section[id]'); 
+        
+        function updateActiveStates() {
+            let currentSectionId = sections[0] ? sections[0].id : 'hero'; 
+            const headerHeight = header.offsetHeight;
+            const scrollMiddle = window.scrollY + window.innerHeight / 2; // Check middle of viewport
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - headerHeight;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                
+                // Use middle of viewport for better active section detection
+                if (scrollMiddle >= sectionTop && scrollMiddle < sectionBottom) {
+                     currentSectionId = section.getAttribute('id');
+                }
+                 // Add/Remove active class for visual section highlighting
+                 if(currentSectionId === section.getAttribute('id')){
+                      if(!section.classList.contains('is-active')){
+                         gsap.to(section, { duration: 0.5, /*backgroundColor: "rgba(var(--primary-color-rgb), 0.03)",*/ ease: "power2.out" }); // Example style change
+                         section.classList.add('is-active');
+                      }
+                 } else {
+                     if(section.classList.contains('is-active')){
+                          gsap.to(section, { duration: 0.5, /*backgroundColor: "transparent",*/ ease: "power2.in" });
+                          section.classList.remove('is-active');
+                     }
+                 }
+            });
+            
+            const footerElement = document.getElementById('contact-footer');
+            if (footerElement && (window.innerHeight + window.scrollY + 50) >= document.body.offsetHeight ) { 
+                 currentSectionId = 'contact-footer';
+            }
+
+            // Update Nav link active state
+            navLinksForActiveState.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSectionId}`) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        window.addEventListener('scroll', updateActiveStates);
+        updateActiveStates(); // Initial call
+
+        // --- GSAP Element Animations ---
+        document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+            const animationType = el.dataset.animationType || "fadeInUp"; 
+            const delay = parseFloat(el.dataset.delay) || 0;
+            const duration = parseFloat(el.dataset.duration) || 0.9; // Slightly longer duration
+            let fromVars = { opacity: 0, scale: 0.96 }; // Start slightly smaller
+
+            if (animationType === "fadeInUp") fromVars.y = 70; // Increase distance
+            else if (animationType === "fadeIn") fromVars.y = 0;
+            else if (animationType === "scaleIn") {fromVars.scale = 0.85; fromVars.y = 0;}
+            
+            gsap.fromTo(el, fromVars, 
+                { opacity: 1, y: 0, scale: 1, duration: duration, delay: delay,
+                    ease: "power3.out", 
+                    scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none", once: true } // Trigger a bit later
+                }
+            );
+        });
+        
+        // --- Search Functionality ---
+        const footerSearchInput = document.getElementById('footer-search-input');
+        // Query for all potential text elements within searchable content areas
+        const contentElements = document.querySelectorAll('.searchable-content p, .searchable-content li, .searchable-content strong, .searchable-content .card-item-header strong, .searchable-content .card-item p, .searchable-content h3, .searchable-content h4');
+        let originalContents = new Map();
+
+        contentElements.forEach((el) => { originalContents.set(el, el.innerHTML); });
+
+        function performSearch(query) {
+            query = query.trim().toLowerCase();
+            let firstMatchElement = null;
+
+            contentElements.forEach(el => {
+                let originalHTML = originalContents.get(el);
+                 if (!originalHTML && el.innerHTML) { originalContents.set(el, el.innerHTML); originalHTML = el.innerHTML; }
+                 else if (!originalHTML) { return; }
+
+                if (query === "") { el.innerHTML = originalHTML; return; }
+
+                const textContent = el.textContent.toLowerCase();
+                if (textContent.includes(query)) {
+                    const regex = new RegExp(`(${escapeRegExp(query)})`, 'gi');
+                    // Apply highlight only to text nodes, preserving HTML structure
+                    try {
+                         el.innerHTML = originalHTML.replace(regex, '<mark class="search-highlight">$1</mark>');
+                    } catch (e) { // Fallback if regex causes issues with complex HTML
+                        console.warn("Highlighting regex error on element:", el, e);
+                        el.innerHTML = originalHTML; // Restore original on error
+                    }
+
+                    if (!firstMatchElement) {
+                        let parentSection = el.closest('section[id]');
+                        if (parentSection) firstMatchElement = parentSection;
+                         else firstMatchElement = el.closest('.content-block') || el.closest('.card-grid') || el;
+                    }
+                } else { el.innerHTML = originalHTML; }
+            });
+            
+            // Scroll to first match only if query is substantial and match found
+            if (firstMatchElement && query.length > 2) { 
+                 gsap.to(window, { duration: 1, scrollTo: { y: firstMatchElement, offsetY: header.offsetHeight + 30 }, ease: "power2.out" });
+            }
+        }
+        
+        function escapeRegExp(string) { return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+        // Only listen to footer search now
+        if(footerSearchInput) {
+            footerSearchInput.addEventListener('input', () => performSearch(footerSearchInput.value));
+        }
+
+        // --- Copy Email Button ---
+        const copyBtn = document.getElementById('copyEmailBtn');
+        if(copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                const email = 'team.vocabo.ai@gmail.com';
+                navigator.clipboard.writeText(email).then(() => {
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    copyBtn.classList.add('copied');
+                    gsap.to(copyBtn, { duration: 0.1, scale: 1.1, yoyo: true, repeat: 1 }); // Quick pulse animation
+                    setTimeout(() => {
+                        copyBtn.innerHTML = '<i class="far fa-copy"></i> Copy';
+                        copyBtn.classList.remove('copied');
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy email: ', err);
+                    copyBtn.innerHTML = 'Error';
+                     setTimeout(() => {
+                        copyBtn.innerHTML = '<i class="far fa-copy"></i> Copy';
+                    }, 2000);
+                });
+            });
+        }
+
+        // --- Scroll to Top Button ---
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+        if(scrollToTopBtn) {
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 400) { // Show later
+                    gsap.to(scrollToTopBtn, {display: "block", opacity: 1, scale:1, duration: 0.4, ease:"back.out(1.7)"});
+                } else {
+                    gsap.to(scrollToTopBtn, {opacity: 0, scale:0.7, duration: 0.4, ease:"power2.in", onComplete: () => scrollToTopBtn.style.display = "none"});
+                }
+            });
+            scrollToTopBtn.addEventListener('click', () => {
+                gsap.to(window, { duration: 1.5, scrollTo: 0, ease: "power3.inOut" }); // Slower, smoother scroll top
+            });
+        }
+
+    }); // End DOMContentLoaded
+    </script>
+</body>
+</html>
